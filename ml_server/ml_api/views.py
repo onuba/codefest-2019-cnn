@@ -27,8 +27,8 @@ def images_random(request):
 # Get random image
 def ia_predict(request):
     prediction = predict(request.GET['imageUrl'])
-    print(request.GET['imageUrl'])
-    return JsonResponse({'predict': prediction })
+    print(prediction)
+    return JsonResponse({'predict': prediction})
 
 
 def get_images():

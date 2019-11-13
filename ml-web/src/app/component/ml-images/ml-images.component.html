@@ -122,16 +122,17 @@
       <h2 class="mb-5">Evaluación</h2>
 
       <div class="row ">
-        <div class="col-6 position-relative">
+        <div class="col-6 position-relative" style="min-height: 250px; padding-top:40px;">
           <div class="image-wrapper position-relative"
-            style="margin: 0 auto; background-color: white; border: 8px solid #9caf058c; width: max-content;  padding: 4px;   border-radius: 133px;">
+            style=" margin: 0 auto; background-color: white; border: 8px solid #9caf058c; width: max-content;  padding: 4px;   border-radius: 133px;">
 
             <img *ngIf="imageUrl" src="http://localhost:8000/static/test/{{imageUrl}}" width="150px"
               style="border-radius: 50%; cursor:pointer" (click)="refreshAndPredict()" />
             <img *ngIf="!imageUrl" src="/assets/images/profile1.jpg" width="150px" style="border-radius: 50%;" />
 
             <div class="thumbnail-wrapper position-absolute" style="bottom: 0px; left: 0px;">
-              <img *ngIf="imageUrl" src="http://localhost:8000/static/test/{{imageUrl}}" style="border: 2px solid white;" width="31px" />
+              <img *ngIf="imageUrl" src="http://localhost:8000/static/test/{{imageUrl}}"
+                style="border: 2px solid white;" width="31px" />
               <img *ngIf="!imageUrl" src="/assets/images/profile1.jpg" style="border: 2px solid white;" width="31px" />
             </div>
 
@@ -142,7 +143,8 @@
             <i class="material-icons" style="padding-top: 5px;">refresh</i>
           </button>
 
-          <button (click)="predict()" class="btn btn-success position-absolute" style="bottom: 0px; right: 20px; border-radius: 50%;">
+          <button (click)="predict()" class="btn btn-success position-absolute"
+            style="bottom: 0px; right: 20px; border-radius: 50%;">
             <i class="material-icons" style="padding-top: 5px;">input</i>
           </button>
 
@@ -150,10 +152,14 @@
         <div class="col-6 pl-4">
 
           <div class="subheading text-center">Resultado</div>
-          <div class="result-input mt-4 ml-4 mr-4 pt-2 text-center"
-            style="border: 1px dotted gray; border-radius: 5px; height: 45px ">
-            <span class="result">&nbsp;</span>
+
+          <div class="prediction-result">
+            <div class="row prediction small" *ngFor="let p of prediction" [ngClass]="{selected: p.name === predictionSelected}">
+              <div class="col-6 text-right">{{p.name}}</div>
+              <div class="col-6">{{p.value}}</div>
+            </div>
           </div>
+
 
           <div *ngIf="error" class="text-danger pt-4 text-center font-weight-bold">{{ error }}</div>
         </div>

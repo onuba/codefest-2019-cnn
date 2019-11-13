@@ -34,8 +34,10 @@ export class MlImagesComponent implements OnInit {
   }
 
   predict() {
+    this.prediction = null;
     this.iaService.getPredict(this.imageUrl).toPromise().then(result => {
-      this.prediction = result.prediction;
+      this.selectMaxValue(result.predict);
+      this.prediction = result.predict;
     }).catch(err => {
       this.error = '¡El servidor no quiere predecir resultado!';
       setTimeout(() => { this.error = null; }, 3000);
@@ -44,6 +46,17 @@ export class MlImagesComponent implements OnInit {
 
   refreshAndPredict() {
     this.refreshImage(err => { if (!err) { this.predict(); } });
+  }
+
+  selectMaxValue(prediction) {
+    if (prediction && Array.isArray(prediction)) {
+      let max = -1;
+      let selected;
+      prediction.forEach(p => {
+        if (Number(p.value) > max) { max = Number(p.value); selected = p.name; }
+      });
+      this.predictionSelected = selected;
+    }
   }
 
 }
