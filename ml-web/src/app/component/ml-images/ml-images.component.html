@@ -127,7 +127,7 @@
             style="margin: 0 auto; background-color: white; border: 8px solid #9caf058c; width: max-content;  padding: 4px;   border-radius: 133px;">
 
             <img *ngIf="imageUrl" src="http://localhost:8000/static/test/{{imageUrl}}" width="150px"
-              style="border-radius: 50%;" />
+              style="border-radius: 50%; cursor:pointer" (click)="refreshAndPredict()" />
             <img *ngIf="!imageUrl" src="/assets/images/profile1.jpg" width="150px" style="border-radius: 50%;" />
 
             <div class="thumbnail-wrapper position-absolute" style="bottom: 0px; left: 0px;">
@@ -142,7 +142,7 @@
             <i class="material-icons" style="padding-top: 5px;">refresh</i>
           </button>
 
-          <button class="btn btn-success position-absolute" style="bottom: 0px; right: 20px; border-radius: 50%;">
+          <button (click)="predict()" class="btn btn-success position-absolute" style="bottom: 0px; right: 20px; border-radius: 50%;">
             <i class="material-icons" style="padding-top: 5px;">input</i>
           </button>
 

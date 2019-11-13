@@ -6,6 +6,8 @@ from django.core.cache import cache
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 
+from ml_ia.ia import predict
+
 TEST_IMAGE_FOLDER = os.getcwd() + '/static/test/'
 
 
@@ -20,6 +22,13 @@ def images_random(request):
     if files != None and len(files) > 0:
         return JsonResponse({'name': files[random.randint(0, len(files) - 1)]})
     return JsonResponse({'test': None})
+
+
+# Get random image
+def ia_predict(request):
+    prediction = predict(request.GET['imageUrl'])
+    print(request.GET['imageUrl'])
+    return JsonResponse({'predict': prediction })
 
 
 def get_images():

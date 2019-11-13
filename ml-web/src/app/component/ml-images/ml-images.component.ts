@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { IaService } from 'src/app/services/ia.service';
 import { ImageService } from 'src/app/services/image.service';
 
 @Component({
@@ -10,21 +11,39 @@ export class MlImagesComponent implements OnInit {
 
   imageUrl: string;
   error: string;
+  prediction: any;
+  predictionSelected: string;
 
   constructor(
-    private imageService: ImageService
+    private imageService: ImageService,
+    private iaService: IaService
   ) { }
 
   ngOnInit() {
   }
 
-  refreshImage() {
+  refreshImage(callback = null) {
     this.imageService.getRandom().toPromise().then(image => {
       this.imageUrl = image.name;
+      if (callback) { callback(null, this.imageUrl); }
     }).catch(err => {
+      if (callback) { callback(err); }
       this.error = '¡El servidor no quiere devolver imagenes!';
       setTimeout(() => { this.error = null; }, 3000);
     });
+  }
+
+  predict() {
+    this.iaService.getPredict(this.imageUrl).toPromise().then(result => {
+      this.prediction = result.prediction;
+    }).catch(err => {
+      this.error = '¡El servidor no quiere predecir resultado!';
+      setTimeout(() => { this.error = null; }, 3000);
+    });
+  }
+
+  refreshAndPredict() {
+    this.refreshImage(err => { if (!err) { this.predict(); } });
   }
 
 }
